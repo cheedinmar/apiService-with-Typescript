@@ -19,5 +19,10 @@ const router = createRouter({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem("token");
+  if (to.path !== '/' && !token) next({ name: 'login' })
+  else next()
+})
 
 export default router

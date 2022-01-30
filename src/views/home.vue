@@ -47,22 +47,15 @@ import { IAllProducts } from '@/types/apiTypes';
 import { useRouter, useRoute } from 'vue-router'
 import { ref } from 'vue';
 const api = new apiService()
-const route = useRoute()
-const router = useRouter()
 const token = localStorage.getItem("token");
 const allProducts = ref<Array<IAllProducts>>([])
-function guardHome(){
-  if(route.path == "/home" && !token){
-    router.push("/")
-  }
-}
+
 function getAllProducts(){
   api.getRequest("/products").then((response)=>{
     allProducts.value = response
     return response
   })
 }
-guardHome()
 getAllProducts()
 
 
