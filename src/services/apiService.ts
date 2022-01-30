@@ -20,10 +20,10 @@ export class apiService {
             this.resetRequestConfig()
             return result.data;
         }catch (error:any){
-            this.handleErrors(error)
+            return this.handleErrors(error)
         }
     }
-    private handleErrors(error: any): never {
+    handleErrors(error: any): never {
         console.log("error hapened", error);
         alert("An error happened " + error);
         this.resetRequestConfig()
@@ -32,13 +32,13 @@ export class apiService {
     resetRequestConfig() {
         this.requestConfig = {}
     }
-    async getRequest<resT = any>(url: string): Promise<resT> {
+    async getRequest<resultType = any>(url: string): Promise<resultType> {
         try {
             let result = await this.customInstance.get(url, this.requestConfig)
             this.resetRequestConfig()
             return result.data;
         } catch (error: any) {
-            this.handleErrors(error)
+            return this.handleErrors(error)
 
         }
     }

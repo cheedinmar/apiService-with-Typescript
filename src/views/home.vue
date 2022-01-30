@@ -1,15 +1,20 @@
 <template>
-  <div class="about">
+  <div class="home">
     <h1>This is an about page</h1>
   </div>
 </template>
-
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+<script lang="ts" setup>
+import { apiService } from '@/services/apiService';
+import { useRouter, useRoute } from 'vue-router'
+const route = useRoute()
+const router = useRouter()
+const token = localStorage.getItem("token");
+function guardHome(){
+  if(route.path == "/home" && !token){
+    router.push("/login")
   }
 }
-</style>
+guardHome()
+
+
+</script>
