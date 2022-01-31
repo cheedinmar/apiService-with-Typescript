@@ -5,12 +5,12 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: login
     },
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
@@ -21,7 +21,7 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
-  if (to.path !== '/' && !token) next({ name: 'login' })
+  if (to.path !== '/login' && !token) next({ name: 'login' })
   else next()
 })
 

@@ -1,5 +1,7 @@
 <template>
- <div class="bg-black">
+<div>
+  <div>
+   <div class="bg-black">
   <div class="flex relative text-center">
   <h1 class="text-3xl tracking-wider text-white text-sha uppercase font-bold p-4 self-center z-10 content-center absolute text-center w-full md:text-4xl">Welcome to Lightning deals</h1>
   <img class="w-full object-cover h-72 block mx-auto  sm:block sm:w-full" 
@@ -9,18 +11,22 @@
   </div>
   
   <div class="p-5 mx-auto max-w-screen-xl">
-  <h2 class="font-bold uppercase text-xl pb-4">Best sellers</h2>
+    <div class="flex items-center justify-between mb-5 ">
+      <h2 class="font-bold uppercase text-xl pb-4">Best sellers</h2>
+      <button class="bg-red-600 px-4 py-2 rounded-md text-white font-bold" @click="addProduct">Add Product</button>
+    </div>
+  
   
   <div class="grid grid-flow-row-dense grid-cols-2 gap-3 justify-between sm:grid-cols-3 md:grid-cols-4">
 
   <div v-for="product in allProducts" :key="product.id">
   <img class=" mb-1 border-solid h-48 w-48 hover:border-yellow-500" alt="Best seller" 
   :src=product.image loading="lazy" />
-   <h2 class="pt-2 m-0 leading-4 font-semibold">{{product.title}}</h2>
+   <h2 class="pt-2 m-0 leading-4 font-semibold w-48 ">{{product.title}}</h2>
    <p>${{product.price}}</p>
    <p class="text-green-500 italic font-medium">In Stock</p>
     </div>
->
+
   
   </div>
   </div>
@@ -40,8 +46,13 @@
     </figure>
     </section>
   </div>
+</div>
+<modalVue title="Add Product" v-if="state"/>
+</div>
+
 </template>
 <script lang="ts" setup>
+import modalVue from '@/components/modal.vue';
 import { apiService } from '@/services/apiService';
 import { IAllProducts } from '@/types/apiTypes';
 import { useRouter, useRoute } from 'vue-router'
@@ -49,12 +60,16 @@ import { ref } from 'vue';
 const api = new apiService()
 const token = localStorage.getItem("token");
 const allProducts = ref<Array<IAllProducts>>([])
+const state = ref<boolean>(false)
 
 function getAllProducts(){
   api.getRequest("/products").then((response)=>{
     allProducts.value = response
     return response
   })
+}
+function addProduct(){
+   state.value= !state.value
 }
 getAllProducts()
 

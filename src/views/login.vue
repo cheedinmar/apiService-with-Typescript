@@ -71,7 +71,7 @@ function login(event: MouseEvent): void {
 		api.postRequest("/auth/login", userData).then((response: ILoginResponse) => {
 			token.value = response.token;
 			localStorage.setItem("token", token.value);
-		 router.push("/home")
+		 router.push("/")
 			return token.value
 
 		})
